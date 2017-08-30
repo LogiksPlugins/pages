@@ -1,0 +1,74 @@
+.pageComp {
+	width: 100%;height: 100%;
+}
+
+.pageCompToolBar.navbar {
+	min-height: 40px;
+	height: 42px;
+	border-radius: 0px;
+	border-left: 0px;
+	margin-bottom: 0px;
+}
+.pageCompToolBar .navbar-collapse {
+	padding-left: 0px;
+}
+.pageCompToolBar.navbar .navbar-right {
+	margin-right:0px;
+}
+.pageCompToolBar .navbar-nav>li>a {
+	padding-top: 10px;
+    padding-bottom: 10px;
+}
+.pageCompToolBar .navbar-nav li>a:focus, .pageCompToolBar .navbar-nav li>a:hover {
+    color: #555;
+    background-color: #F0F0F0;
+}
+.pageCompToolBar .navbar-nav li .glyphicon, .pageCompToolBar .navbar-nav li .fa {
+	padding: 3px;
+}
+.pageCompToolBar .navbar-nav .btn-group>.btn {
+	height: 100%;
+}
+.pageCompToolBar.navbar label {
+	font-weight:normal;
+}
+.pageCompToolBar .navbar-nav li.bar {
+	padding-top: 10px;
+    padding-bottom: 10px;
+}
+.pageCompToolBar .navbar-form {
+	margin: 3px;
+    margin-left: 0px;
+    margin-right: 0px;
+}
+.pageCompContainer {
+	margin-top: 42px;
+}
+
+.pageCompContainer.withSidebar {
+	height: 100%;
+}
+.pageCompContainer.withSidebar.withToolbar {
+	margin-top: -42px;
+	padding-top: 42px;
+}
+.pageComp.withFixedBar .pageCompContainer.withSidebar.withToolbar {
+	margin-top: 0px;
+}
+.pageCompContainer.withSidebar .pageCompSidebar {
+	height: 100%;
+	border-right: 1px solid #EEE;
+	overflow: auto;
+	background: #F5F5F5;
+    padding: 0px;
+}
+.pageCompContainer.withSidebar .pageCompContent {
+	height: 100%;
+	overflow: auto;
+	background: #FFF;
+    padding: 0px;
+}
+
+#pgtoolbar .onsidebarSelect {
+	display: none;
+}

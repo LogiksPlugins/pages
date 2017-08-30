@@ -1,0 +1,35 @@
+{
+    "name": "pages",
+    "version": "2.0.0",
+    "status": "beta",
+    "type": "module",
+    "package":"olgks.pages",
+    "description": "This module is a developer module used as boilerplate for pages with various layouts.",
+    "keywords": "",
+    "license": "MIT License",
+    "homepage": "",
+    "repository": {
+        "type": "git",
+        "url": "git://github.com/LogiksPlugins/pages.git"
+    },
+    "logiks-core": {
+        "min": "4.0",
+        "max": "*"
+    },
+    "logiks-apps": "*",
+    "files": [],
+    "ignore": [
+        ".git",
+        "Readme.txt"
+    ],
+    "dependencies": [],
+    "devDependencies": [],
+    "permissions":[],
+    "schema":[],
+    "authors": [
+        {
+            "name": "Bismay Kumar Mohapatra",
+            "email": "bismay@openlogiks.org"
+        }
+    ]
+}
