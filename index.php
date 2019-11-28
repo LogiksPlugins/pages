@@ -16,6 +16,14 @@ if(!function_exists("printPageContent")) {
 			$opts=array();
 		}
 
+		if(isset($opts['policy']) && strlen($opts['policy'])>0) {
+			$allow=checkUserPolicy($opts['policy']);
+        	if(!$allow) {
+        		trigger_logikserror("Sorry, <strong>{This Module}</strong> is not accessible to you. Contact Admin!",E_LOGIKS_ERROR,401);
+        		return false;
+        	}
+		}
+
 		$dataParams=[];
 
 		foreach ($compParams as $compKey => $comp) {
