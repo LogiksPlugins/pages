@@ -44,7 +44,7 @@ if(!function_exists("printPageToolbar")) {
 
 		$html=["left"=>[],"right"=>[]];
 		foreach($btns as $a=>$b) {
-			if(!isset($b['policy']) && strlen($b['policy'])>0) {
+			if(isset($b['policy']) && strlen($b['policy'])>0) {
 				$allow=checkUserPolicy($b['policy']);
         		if(!$allow) continue;
 			}
