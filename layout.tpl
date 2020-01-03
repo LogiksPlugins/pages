@@ -1,6 +1,5 @@
-<div class="pageComp withFixedBar">
-
 	{if isset($toolbar) && $toolbar}
+	<div class="pageComp withFixedBar">
 		<nav id="pgtoolbar" class="pageCompToolBar navbar navbar-default navbar-fixed-top">
 			<div class="container-fluid">
 				<div class="collapse navbar-collapse">
@@ -8,6 +7,8 @@
 			    </div>
 			</div>
 		</nav>
+	{else}
+	<div class="pageComp">
 	{/if}
 
 	{if isset($sidebar) && $sidebar}
