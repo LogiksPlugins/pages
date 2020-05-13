@@ -39,7 +39,7 @@ if(!function_exists("printPageContent")) {
 	function listPageParams() {
 		$arr=array(
 				"toolbar"=>null,
-				"contentarea"=>"",
+				"contentArea"=>"",
 				"sidebar"=>null,
 				"footer"=>null,
 				//"autopopup"=>"",
