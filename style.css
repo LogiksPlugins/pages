@@ -72,3 +72,12 @@
 #pgtoolbar .onsidebarSelect {
 	display: none;
 }
+
+#pgtoolbar .btn-more {
+    box-shadow: none;
+    background: transparent;
+    text-transform: inherit;
+    color: inherit;
+    font: inherit;
+    margin-top: -3px;
+}

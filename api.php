@@ -43,6 +43,7 @@ if(!function_exists("printPageToolbar")) {
 		$template=getPageToolbarElements();
 
 		$html=["left"=>[],"right"=>[]];
+		$moreLinks = ["menu"=>[], "title"=>_ling("more")];
 		foreach($btns as $a=>$b) {
 			if(isset($b['policy']) && strlen($b['policy'])>0) {
 				$allow=checkUserPolicy($b['policy']);
@@ -59,6 +60,7 @@ if(!function_exists("printPageToolbar")) {
 			if(!isset($b['class'])) $b['class']="";
 			if(!isset($b['cmd'])) $b['cmd']=$a;
 			if(!isset($b['subtype'])) $b['subtype']="";
+			if(!isset($b['more'])) $b['more']=false;
 
 			if(!isset($b['options'])) $b['options']="";
 			elseif(is_array($b['options'])) {
@@ -76,15 +78,34 @@ if(!function_exists("printPageToolbar")) {
 			}
 			//if(!isset($b['onclick'])) $b['onclick']="";
 
-			if(isset($template[$b['type']])) {
-				$html[$b['align']][]=sprintf($template[$b['type']],_ling($b['title']),$b['icon'],$b['id'],$b['tips'],$b['class'],$b['cmd'],$b['options']);
+			if($b['more']) {
+				$b['type'] = "button";
+				if(in_array("active", explode(" ",strtolower($b['class'])))) {
+					$moreLinks['title'] = _ling($b['title']);
+				}
+				$moreLinks['menu'][]=sprintf($template[$b['type']],_ling($b['title']),$b['icon'],$b['id'],$b['tips'],$b['class'],$b['cmd'],$b['options']);
 			} else {
-				$html[$b['align']][]=sprintf($template['button'],_ling($b['title']),$b['icon'],$b['id'],$b['tips'],$b['class'],$b['cmd']);
+				if(isset($template[$b['type']])) {
+					$html[$b['align']][]=sprintf($template[$b['type']],_ling($b['title']),$b['icon'],$b['id'],$b['tips'],$b['class'],$b['cmd'],$b['options']);
+				} else {
+					$html[$b['align']][]=sprintf($template['button'],_ling($b['title']),$b['icon'],$b['id'],$b['tips'],$b['class'],$b['cmd']);
+				}
 			}
 		}
-		$html="<ul class='nav navbar-nav navbar-left'>".implode("", $html['left'])."</ul>".
-		"<ul class='nav navbar-nav navbar-right'>".implode("", $html['right'])."</ul>";
-		return $html;
+		$htmlOut="<ul class='nav navbar-nav navbar-left'>".implode("", $html['left'])."</ul>";
+		if($moreLinks['menu'] && count($moreLinks['menu'])>0) {
+			$htmlOut.="<ul class='nav navbar-nav navbar-right'>".implode("", $html['right']).
+						"<li id='%3\$s' class='btn-group %5\$s' title='%4\$s' data-cmd='%6\$s'>
+							<button type='button' class='btn btn-default btn-more dropdown-toggle' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false' >
+						    	".$moreLinks['title']." <span class='caret'></span>
+							</button>
+							<ul class='dropdown-menu'>".implode("", $moreLinks['menu'])."</ul>
+					  	</li>".
+					"</ul>";
+		} else {
+			$htmlOut.="<ul class='nav navbar-nav navbar-right'>".implode("", $html['right'])."</ul>";
+		}
+		return $htmlOut;
 	}
 	function getPageToolbarElements() {
 		$comps=[
