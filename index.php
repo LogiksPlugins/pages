@@ -8,6 +8,10 @@ if(!function_exists("printPageContent")) {
 		if(!$layout || $layout=="auto" || $layout=="layout" || !file_exists($layout)) $layout=__DIR__."/layout.tpl";
 
 		if(!$compParams) $compParams=listPageParams();
+		else $compParams = array_merge(listPageParams(), $compParams);
+
+		$temp = explode("/", $compParams["BASE_DIR"]);
+		$compParams['MODULE'] = end($temp);
 
 		if(!is_array($classes)) {
 			$classes=array();
@@ -27,7 +31,7 @@ if(!function_exists("printPageContent")) {
 		$dataParams=[];
 
 		foreach ($compParams as $compKey => $comp) {
-			$dataParams[$compKey]=getPageComponent($compKey,$comp);
+			$dataParams[$compKey]=getPageComponent($compKey,$comp,$compParams);
 		}
 		//printArray($dataParams);
 		
@@ -38,10 +42,13 @@ if(!function_exists("printPageContent")) {
 	}
 	function listPageParams() {
 		$arr=array(
+				"BASE_DIR"=>__DIR__,
+				"MODULE"=>"pages",
 				"toolbar"=>null,
 				"contentArea"=>"",
 				"sidebar"=>null,
 				"footer"=>null,
+				"slug"=>"?/page/a/b/c/d",
 				//"autopopup"=>"",
 				//"hidden"=>"",
 			);

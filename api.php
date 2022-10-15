@@ -2,7 +2,7 @@
 if(!defined('ROOT')) exit('No direct script access allowed');
 
 if(!function_exists("printPageToolbar")) {
-	function getPageComponent($compKey,$compContent) {
+	function getPageComponent($compKey,$compContent,$compParams = []) {
 		if(is_array($compContent)) {
 			switch ($compKey) {
 				case 'toolbar':
@@ -32,7 +32,7 @@ if(!function_exists("printPageToolbar")) {
 					return file_get_contents($compContent);
 				}
 			}  elseif(function_exists($compContent)) {
-				return call_user_func($compContent);
+				return call_user_func($compContent, $compParams);
 			} else {
 				return $compContent;
 			}
@@ -126,6 +126,89 @@ if(!function_exists("printPageToolbar")) {
 				"bar"=>"<li class='bar'><i class='glyphicon glyphicon-option-vertical'></i><li>"
 			];
 		return $comps;
+	}
+	function pageContentDefault($compParams) {
+		$slug = _slug($compParams['slug']);
+	    if(strlen($slug['page'])<=0) $slug['page'] = "main";
+	    
+	    $pgFiles = [
+	            "page"=>$compParams['BASE_DIR']."/pages/{$slug['page']}.php",
+	            "form"=>$compParams['BASE_DIR']."/forms/{$slug['page']}.json",
+	            "report"=>$compParams['BASE_DIR']."/reports/{$slug['page']}.json",
+	            "infoview"=>$compParams['BASE_DIR']."/formss/{$slug['page']}.json",
+	            "infoview2"=>$compParams['BASE_DIR']."/infoviews/{$slug['page']}.json",
+	            "view"=>$compParams['BASE_DIR']."/views/{$slug['page']}.json",
+	            "mydash"=>$compParams['BASE_DIR']."/mydash/{$slug['page']}.json",
+	            "mydash2"=>$compParams['BASE_DIR']."/dash.php",
+	        ];
+	    
+	    ob_start();
+	    // printArray($slug);
+	    // printArray($compParams);
+	    $loaded = false;
+	    foreach($pgFiles as $key=>$pgFile) {
+	        if(file_exists($pgFile)) {
+	        	// echo $key;
+	        	$loaded = true;
+	            switch($key) {
+	                case "page":
+	                case "mydash2":
+	                    include_once $pgFile;
+	                    break;
+	                case "form":
+	                    loadModuleLib("forms","api");
+						//printForm("new",$newForm,$dbKey,[],['gotolink'=>$glink,'reportlink'=>$glink]);
+						printForm("new",$pgFile);//,$dbKey,[],['gotolink'=>$glink,'reportlink'=>$glink]
+	                    //$slug['a']
+	                    //$slug['b']
+	                    break;
+	                case "infoview":
+	                case "infoview2":
+	                    loadModuleLib("forms","api");
+						//printInfoview("new",$newForm,$dbKey,[],['gotolink'=>$glink,'reportlink'=>$glink]);
+						printInfoview($pgFile);
+
+	                    break;
+	                case "report":
+	                	loadModuleLib("reports","api");
+
+                    	echo "<div class='col-xs-12'>";// report-notoolbar
+						echo "<div class='row'>";
+						echo _css("reports");
+						echo "<div class='reportholder' style='width:100%;height:100%;'>";
+						$a=printReport($pgFile);
+						if(!$a) {
+							echo "<h3 align=center>Panel Source Corrupted</h3>";
+						}
+						echo "</div>";
+						echo _js(["FileSaver","html2canvas","reports"]);
+						echo "</div>";
+						//echo "<div id='sliderPanel' class='sliderPanel'><iframe id='credsEditor' width=100% height=100% style='width:100%;height:100%;' frameborder=0 ></iframe></div>";
+						echo "</div>";
+	                    break;
+	                case "mydash":
+	                	loadModuleLib("myDash", "dash_canvas");
+
+	                	$dashConfig = json_decode(file_get_contents($pgFile), true);
+	                	if($dashConfig) {
+	                		printMyDashCanvas($dashConfig);
+	                	} else {
+	                		$loaded = false;
+	                	}
+	                    break;
+	                default:
+	                	$loaded = false;
+	            }
+	        }
+	    }
+	    if(!$loaded) {
+	        echo "<h3 align=center><br><br>Requested Page Not Found</h3>";
+	    }
+	    
+		$html=ob_get_contents();
+		ob_end_clean();
+		
+		return $html;
 	}
 }
 ?>
