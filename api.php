@@ -135,7 +135,7 @@ if(!function_exists("printPageToolbar")) {
 	            "page"=>$compParams['BASE_DIR']."/pages/{$slug['page']}.php",
 	            "form"=>$compParams['BASE_DIR']."/forms/{$slug['page']}.json",
 	            "report"=>$compParams['BASE_DIR']."/reports/{$slug['page']}.json",
-	            "infoview"=>$compParams['BASE_DIR']."/formss/{$slug['page']}.json",
+	            "infoview"=>$compParams['BASE_DIR']."/forms/{$slug['page']}.json",
 	            "infoview2"=>$compParams['BASE_DIR']."/infoviews/{$slug['page']}.json",
 	            "view"=>$compParams['BASE_DIR']."/views/{$slug['page']}.json",
 	            "mydash"=>$compParams['BASE_DIR']."/mydash/{$slug['page']}.json",
@@ -147,7 +147,7 @@ if(!function_exists("printPageToolbar")) {
 	    // printArray($compParams);
 	    $loaded = false;
 	    foreach($pgFiles as $key=>$pgFile) {
-	        if(file_exists($pgFile)) {
+	        if(!$loaded && file_exists($pgFile)) {
 	        	// echo $key;
 	        	$loaded = true;
 	            switch($key) {
