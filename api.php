@@ -95,7 +95,7 @@ if(!function_exists("printPageToolbar")) {
 		$htmlOut="<ul class='nav navbar-nav navbar-left'>".implode("", $html['left'])."</ul>";
 		if($moreLinks['menu'] && count($moreLinks['menu'])>0) {
 			$htmlOut.="<ul class='nav navbar-nav navbar-right'>".implode("", $html['right']).
-						"<li id='%3\$s' class='btn-group %5\$s' title='%4\$s' data-cmd='%6\$s'>
+						"<li class='btn-group'>
 							<button type='button' class='btn btn-default btn-more dropdown-toggle' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false' >
 						    	".$moreLinks['title']." <span class='caret'></span>
 							</button>
