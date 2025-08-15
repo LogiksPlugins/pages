@@ -35,11 +35,11 @@ $(function() {
 		func="pg"+cmd.charAt(0).toUpperCase()+cmd.substr(1)
 
 		if(window[func]!=null) {
-			window[func](this,dx);
+			window[func](this, dx);
 		} else if(window[func.toLowerCase()]!=null) {
-			window[func.toLowerCase()](this,dx);
+			window[func.toLowerCase()](this, dx);
 		} else if(window[cmd]!=null) {
-			window[cmd](this);
+			window[cmd](this, dx);
 			//console.warn("Page function not defined for : "+cmd);
 		} else {
 			console.warn("Page function not defined for : "+cmd);
